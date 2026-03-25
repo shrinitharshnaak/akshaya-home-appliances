@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "axios": "^1.13.6",
+    "lucide-react": "^0.577.0",
+    "react-router-dom": "^7.13.1"
+  },
+  "name": "akshaya-appliances",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
+    "start": "NODE_ENV=production node server/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
