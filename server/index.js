@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import fs from 'fs';
 import connectDB from './config/db.js';
 
 // Route Definitions
@@ -39,7 +40,11 @@ app.use('/api/upload', uploadRoutes);
 /**
  * STATIC ASSET CONFIGURATION
  */
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+const uploadPath = path.resolve(__dirname, 'uploads');
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
+app.use('/uploads', express.static(uploadPath));
 
 // Serve React build in production
 if (process.env.NODE_ENV === 'production') {
