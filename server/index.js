@@ -10,15 +10,18 @@ import orderRoutes from './routes/orderRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 
+import { fileURLToPath } from 'url';
+
 // Initialize Environment Variables
 dotenv.config();
 
 // Establish Database Connection
 connectDB();
 
-const app = express();
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+const app = express();
 /**
  * MIDDLEWARE PROTOCOL
  */
