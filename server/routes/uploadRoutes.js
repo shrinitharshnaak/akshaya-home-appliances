@@ -4,13 +4,17 @@ import multer from 'multer';
 import fs from 'fs';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const router = express.Router();
 
 /**
  * DIRECTORY INITIALIZATION
- * Ensures the 'uploads/' vault exists on the server disk.
  */
-const uploadDir = 'uploads/';
+const uploadDir = path.resolve(__dirname, '../uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -63,8 +67,8 @@ router.post('/', protect, admin, upload.single('image'), (req, res) => {
     throw new Error('No image file detected in the request payload.');
   }
 
-  // Convert Windows backslashes (\) to web-friendly forward slashes (/)
-  const safePath = `/${req.file.path.replace(/\\/g, '/')}`;
+  // Return a clean web-friendly path (e.g., /uploads/image-123.jpg)
+  const safePath = `/uploads/${req.file.filename}`;
 
   res.send({
     message: 'Asset successfully synchronized with the server.',
